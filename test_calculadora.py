@@ -1,13 +1,12 @@
 import unittest
 from datetime import datetime
 from calculadora import CalculadoraLiquidacion 
-
 class TestCalculadoraLiquidacion(unittest.TestCase):
     def setUp(self):
         self.calculadora = CalculadoraLiquidacion()
 
     def test_caso_prueba_real(self):
-        motivo= "Renuncia"
+        motivo = "Renuncia"
         salario_basico = 2000000
         fecha_inicio_labores = "01/01/2023"
         fecha_ultimas_vacaciones = "01/07/2023"
@@ -17,7 +16,7 @@ class TestCalculadoraLiquidacion(unittest.TestCase):
         vacaciones = self.calculadora.calcular_vacaciones(salario_basico, dias_acumulados_vacaciones)
         cesantias = self.calculadora.calcular_cesantias(salario_basico, dias_acumulados_vacaciones)
         intereses_cesantias = self.calculadora.calcular_intereses_cesantias(cesantias, vacaciones)
-        primas = self.calculadora.calcular_prima(salario_basico, dias_acumulados_vacaciones)
+        primas = self.calculadora.calcular_prima(salario_basico, dias_acumulados_vacaciones)  
         retencion_fuente = self.calculadora.calcular_retencion(indemnizacion + vacaciones + cesantias + intereses_cesantias + primas)
         total_pagar = indemnizacion + vacaciones + cesantias + intereses_cesantias + primas - retencion_fuente
 
@@ -30,50 +29,40 @@ class TestCalculadoraLiquidacion(unittest.TestCase):
         self.assertAlmostEqual(total_pagar, 2809099, delta=0.01)
 
     def test_calculate_liquidacion(self):
-        salario = 2000000
+        salario = 1500000
         fecha_inicio = "01/01/2022"
         fecha_fin = "01/01/2023"
         result = self.calculadora.calcular_liquidacion(salario, fecha_inicio, fecha_fin)
-        self.assertEqual(result, 2165000 )  
+        self.assertEqual(result, 476228)  
 
     def test_calculate_indemnizacion(self):
-        salario = 2000000
+        salario = 2500000
         motivo = "despido"
-        fecha_inicio = "01/01/2022"
-        fecha_fin = "15/01/2022"
         meses_trabajados = 6
-        result = self.calculadora.calcular_indemnizacion(salario, motivo, meses_trabajados,  fecha_inicio, fecha_fin)
-        self.assertEqual(result, 6000000) 
+        result = self.calculadora.calcular_indemnizacion(salario, motivo, meses_trabajados)
+        self.assertEqual(result, 3337963) 
 
     def test_calculate_vacaciones(self):
-        salario = 2000000
-        fecha_inicio = "01/01/2022"
-        fecha_fin = "15/01/2022"
+        salario = 1500000
         dias_trabajados = 10
-        result = self.calculadora.calcular_vacaciones(salario, dias_trabajados,  fecha_inicio, fecha_fin)
-        self.assertEqual(result, 66666)  
+        result = self.calculadora.calcular_vacaciones(salario, dias_trabajados)
+        self.assertEqual(result, 20833)  
 
     def test_calculate_cesantias(self):
-        salario_mensual = 2000000
-        fecha_inicio = "01/01/2022"
-        fecha_fin = "15/01/2022"
+        salario_mensual = 3000000
         dias_trabajados = 15
-        result = self.calculadora.calcular_cesantias(salario_mensual, dias_trabajados,  fecha_inicio, fecha_fin)
-        self.assertEqual(result, 50000)  
+        result = self.calculadora.calcular_cesantias(salario_mensual, dias_trabajados)
+        self.assertEqual(result, 125000)  
 
     def test_calculate_prima(self):
         salario_mensual = 2000000
-        fecha_inicio = "01/01/2022"
-        fecha_fin = "15/01/2022"
         dias_trabajados = 20
-        result = self.calculadora.calcular_prima(salario_mensual, dias_trabajados,  fecha_inicio, fecha_fin)
+        result = self.calculadora.calcular_prima(salario_mensual, dias_trabajados)
         self.assertEqual(result, 55556) 
 
     def test_calculate_retencion(self):
-        salario = 5000000
-        fecha_inicio = "01/01/2022"
-        fecha_fin = "15/01/2022"
-        result = self.calculadora.calcular_retencion(salario,  fecha_inicio, fecha_fin)
+        ingreso_laboral = 5000000
+        result = self.calculadora.calcular_retencion(ingreso_laboral)
         self.assertEqual(result, 0) 
 
     def test_invalid_date_format_calculate_liquidacion(self):

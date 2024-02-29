@@ -9,15 +9,12 @@ class CalculadoraLiquidacion:
         fecha_fin = datetime.strptime(fecha_fin, "%d/%m/%Y")
         dias_totales = (fecha_fin - fecha_inicio).days + 1  
         dias_faltantes = 30 - fecha_fin.day
-
-        # Calcular liquidación 
         valor_diario = salario / 30
         liquidacion = valor_diario * dias_faltantes
 
         return round(liquidacion)
 
     def calcular_indemnizacion(self, salario, motivo, meses_trabajados):
-        # Calcular indemnización según motivo de finalización
         factor_despido = 0.5 if motivo.lower() == 'despido' else 0.0
         valor_indemnizacion = salario * meses_trabajados * factor_despido
 
@@ -34,7 +31,6 @@ class CalculadoraLiquidacion:
         return round(cesantias)
 
     def calcular_intereses_cesantias(self, cesantias, vacaciones):
-        # Calcular valor de intereses de cesantías
         valor_intereses_cesantias = (cesantias + vacaciones) * 0.12
         return valor_intereses_cesantias
 
@@ -42,13 +38,15 @@ class CalculadoraLiquidacion:
         prima = salario_mensual * (dias_trabajados / 360) 
         return round(prima / 2)
 
-    def calcular_retencion(self, ingreso_laboral):
-        retencion = 0  # Initialize with a default value
+    def calcular_retencion(self, salario_basico):
+        retencion = 0  
 
-        if ingreso_laboral <= 42412:
-            pass  # 
-        elif ingreso_laboral <= 636132:
-            ingreso_uvt = ingreso_laboral / self.valor_uvt
+        salario_basico = float(salario_basico)
+
+        if salario_basico <= 42412:
+            pass  
+        elif salario_basico <= 636132:
+            ingreso_uvt = salario_basico / self.valor_uvt
             base_uvt = ingreso_uvt - 95
             base_pesos = base_uvt * self.valor_uvt  
             retencion = (base_pesos * 0.19) + (10 * self.valor_uvt)
