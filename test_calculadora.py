@@ -4,7 +4,7 @@ from calculadora import CalculadoraLiquidacion
 class TestCalculadoraLiquidacion(unittest.TestCase):
     def setUp(self):
         self.calculadora = CalculadoraLiquidacion()
-
+#Extraordinario
     def test_caso_prueba_real(self):
         motivo = "Renuncia"
         salario_basico = 2000000
@@ -27,43 +27,45 @@ class TestCalculadoraLiquidacion(unittest.TestCase):
         self.assertAlmostEqual(primas, 1082500, delta=0.01)
         self.assertAlmostEqual(retencion_fuente, 28154.64, delta=0.01)
         self.assertAlmostEqual(total_pagar, 2809099, delta=0.01)
-
+    
+#Extraordinario
     def test_calculate_liquidacion(self):
         salario = 1500000
         fecha_inicio = "01/01/2022"
         fecha_fin = "01/01/2023"
         result = self.calculadora.calcular_liquidacion(salario, fecha_inicio, fecha_fin)
         self.assertEqual(result, 476228)  
-
+#Extraodinario
     def test_calculate_indemnizacion(self):
         salario = 2500000
         motivo = "despido"
         meses_trabajados = 6
         result = self.calculadora.calcular_indemnizacion(salario, motivo, meses_trabajados)
         self.assertEqual(result, 3337963) 
-
+#extraordinario
     def test_calculate_vacaciones(self):
         salario = 1500000
         dias_trabajados = 10
         result = self.calculadora.calcular_vacaciones(salario, dias_trabajados)
         self.assertEqual(result, 20833)  
-
+#extraordinario
     def test_calculate_cesantias(self):
         salario_mensual = 3000000
         dias_trabajados = 15
         result = self.calculadora.calcular_cesantias(salario_mensual, dias_trabajados)
         self.assertEqual(result, 125000)  
-
+#extraordinario
     def test_calculate_prima(self):
-        salario_mensual = 2000000
+        salario_mensual = 200000
         dias_trabajados = 20
         result = self.calculadora.calcular_prima(salario_mensual, dias_trabajados)
         self.assertEqual(result, 55556) 
-
+#extraordinario
     def test_calculate_retencion(self):
         ingreso_laboral = 5000000
         result = self.calculadora.calcular_retencion(ingreso_laboral)
         self.assertEqual(result, 0) 
+#Pruebas de Manejo de Errores
 
     def test_invalid_date_format_calculate_liquidacion(self):
         salario = 2000000
@@ -117,7 +119,7 @@ class TestCalculadoraLiquidacion(unittest.TestCase):
 
     def test_invalid_motivo_terminacion(self):
         with self.assertRaises(ValueError):
-            self.calculadora.calcular_indemnizacion(2000000, "Despido Masivo", 12)
+            self.calculadora.calcular_indemnizacion(2000000, "Despido", 12)
 
     def test_negative_salario_basico(self):
         with self.assertRaises(ValueError):
@@ -126,10 +128,12 @@ class TestCalculadoraLiquidacion(unittest.TestCase):
     def test_negative_dias_acumulados_vacaciones(self):
         with self.assertRaises(ValueError):
             self.calculadora.calcular_vacaciones(2000000, -10)
-
+        pass
+    
     def test_invalid_ingreso_laboral_type(self):
         with self.assertRaises(ValueError):
             self.calculadora.calcular_retencion("five million")
+
 
 if __name__ == '__main__':
     unittest.main()
