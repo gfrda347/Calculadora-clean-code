@@ -1,6 +1,5 @@
 # Proyecto Calculadora de liquidación definitiva
 
-Se escribe usando la notación Markdown, que pueden consultar en internet en muchas páginas.
 
 ## ¿Quién hizo esto?
 
