@@ -5,6 +5,7 @@ from datetime import datetime
 from calculadora import CalculadoraLiquidacion
 
 
+
 class TestCalculadoraLiquidacion(unittest.TestCase):
     def setUp(self):
         self.calculadora = CalculadoraLiquidacion()
@@ -72,18 +73,44 @@ class TestCalculadoraLiquidacion(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.calculadora.calcular_liquidacion(salario, fecha_inicio, fecha_fin)
 
-    def test_motivo_invalido_calculo_indemnizacion(self):
-        salario = 2000000
-        motivo = "Renuncia"
-        meses_trabajados = 6
-
-        # Verificar que se lance una excepción ValueError
+    def test_calculo_intereses_cesantias_valor_negativo(self):
+        calc = CalculadoraLiquidacion()
+        cesantias = -10000
+        vacaciones = 20000
+        
         with self.assertRaises(ValueError):
-            self.calculadora.calcular_indemnizacion(salario, motivo, meses_trabajados)
+            calc.calcular_intereses_cesantias(cesantias, vacaciones)
 
-        # Verificar que se lance una excepción ValueError
+
+    def test_calculo_liquidacion_fecha_invalida(self):
+        calc = CalculadoraLiquidacion()
+        salario_basico = 500000
+        fecha_inicio_labores = "01/01/2023"
+        fecha_ultimas_vacaciones = "30/02/2023"  # Fecha inválida (febrero no tiene 30 días)
+        dias_acumulados_vacaciones = 10
+        
         with self.assertRaises(ValueError):
-            self.calculadora.calcular_indemnizacion(salario, motivo, meses_trabajados)
+            calc.calcular_resultados_prueba(salario_basico, fecha_inicio_labores, fecha_ultimas_vacaciones, dias_acumulados_vacaciones)
+
+
+    class TestCalculadoraLiquidacion(unittest.TestCase):
+        def test_motivo_invalido_calculo_indemnizacion(self):
+        # Arrange
+            salario = 2000000
+            motivo = "Renuncia"  # Motivo de terminación inválido
+            meses_trabajados = 6
+            calculadora = CalculadoraLiquidacion()  # Se crea una instancia de la calculadora
+
+        # Act & Assert
+            with self.assertRaises(ValueError) as context:
+             calculadora.calcular_indemnizacion(salario, motivo, meses_trabajados)
+
+        # Verificar el mensaje de la excepción
+            self.assertEqual(str(context.exception), f"El motivo de terminación '{motivo}' no es válido. Los motivos válidos son: despido, renuncia, retiro")
+
+
+
+
 
 
     def test_dias_trabajados_negativos_calculo_vacaciones(self):
@@ -95,6 +122,7 @@ class TestCalculadoraLiquidacion(unittest.TestCase):
     def test_dias_trabajados_negativos_calculo_cesantias(self):
         salario_mensual = 2000000
         dias_trabajados = -10
+    
         with self.assertRaises(ValueError):
             self.calculadora.calcular_cesantias(salario_mensual, dias_trabajados)
 
@@ -111,8 +139,10 @@ class TestCalculadoraLiquidacion(unittest.TestCase):
         primas = 15000
         retencion_fuente = 5000
         total_pagar = -(indemnizacion + vacaciones + cesantias + intereses_cesantias + primas + retencion_fuente)
+    
         with self.assertRaises(ValueError):
-            pass
+            self.calculadora.imprimir_resultados(indemnizacion, vacaciones, cesantias, intereses_cesantias, primas, retencion_fuente, total_pagar)
+
 
     def test_formato_fecha_inicio_invalido(self):
         with self.assertRaises(ValueError):
@@ -122,9 +152,17 @@ class TestCalculadoraLiquidacion(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.calculadora.calcular_liquidacion(2000000, "01/01/2022", "2023/01/01")
 
-    def test_motivo_terminacion_invalido(self):
+    def test_motivo_invalido_calculo_indemnizacion(self):
+        salario = 2000000
+        motivo = "Renuncia"  # Un motivo de terminación inválido
+        meses_trabajados = 6
+
+    # Verificar que se lance una excepción ValueError
         with self.assertRaises(ValueError):
-            self.calculadora.calcular_indemnizacion(2000000, "Despido", 12)
+            self.calculadora.calcular_indemnizacion(salario, motivo, meses_trabajados)
+
+
+
 
     def test_salario_basico_negativo(self):
         with self.assertRaises(ValueError):

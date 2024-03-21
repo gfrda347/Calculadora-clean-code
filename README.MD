@@ -9,7 +9,7 @@ Por ejemplo, este Cheat Sheet.
 ## ¿Quién hizo esto?
 
 David Santiago Rodríguez Ruiz
-Víctor Manuel Monsalve
+Víctor Manuel Monsalve Aguilar 
 
 ## ¿Qué es y para qué es?
 
