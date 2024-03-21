@@ -1,10 +1,6 @@
 # Proyecto Calculadora de liquidación definitiva
 
-El archivo README.md es el lugar donde los usuarios de un proyecto van a buscar las respuestas a las preguntas que se hacen antes de poder comenzar a usarlo.
-
 Se escribe usando la notación Markdown, que pueden consultar en internet en muchas páginas.
-
-Por ejemplo, este Cheat Sheet.
 
 ## ¿Quién hizo esto?
 
